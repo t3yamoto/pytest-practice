@@ -25,3 +25,13 @@ def test_list_tasks_raises():
 def test_get_raises():
     with pytest.raises(TypeError):
         tasks.get(task_id="123")
+
+
+class TestUpdate:
+    def test_bad_id(self):
+        with pytest.raises(TypeError):
+            tasks.update(task_id={"dict instead": 1}, task=tasks.Task())
+
+    def test_bad_task(self):
+        with pytest.raises(TypeError):
+            tasks.update(task_id=1, task="not a task")
