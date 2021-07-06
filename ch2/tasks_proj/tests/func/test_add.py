@@ -3,6 +3,17 @@ import tasks
 from tasks import Task
 
 
+@pytest.fixture(autouse=True)
+def initialized_tasks_db(tmpdir):
+    # setup
+    tasks.start_tasks_db(str(tmpdir), "tiny")
+
+    yield  # run test here
+
+    # teardown
+    tasks.stop_tasks_db()
+
+
 def test_add_returns_valid_id():
     new_task = Task("do something")
     task_id = tasks.add(new_task)
